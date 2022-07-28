@@ -3,8 +3,8 @@ const Guilds = require('../../schemas/Guilds')
 const Users = require('../../schemas/Users')
 
 module.exports = async (bot, oldState, newState) => {
-  let guilds = await Guilds.findOne({ guild_id: newState.guild.id })
-  let users = await Users.findOne({ guild_id: newState.guild.id, discord_id: newState.member.id })
+  let guilds = await Guilds.findOne({ guild_id: newState?.guild.id })
+  let users = await Users.findOne({ guild_id: newState?.guild.id, discord_id: newState?.id })
 
   if(!guilds.privates.get('isEnabled')) return
 

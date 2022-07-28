@@ -2,7 +2,7 @@ const { Discord, MessageActionRow, MessageButton, MessageEmbed } = require("disc
 const Guilds = require('../../schemas/Guilds')
 
 module.exports = async (bot, guild) => {
-    let guilds = await Guilds.findOne({ guild_id: guild.id }) ?? Guilds.create({ guild_id: guild.id, moderation: { isModerating: false, mutes: true, mute_role: null }, privates: { isEnabled: false, category: null, channelVoice: null, channelText: null }, tickets: { isEnabled: false, number: 0, categoryOpen: null, categoryHold: null, categoryClosed: null, channelLog: null, channelNew: null } })
+    let guilds = await Guilds.findOne({ guild_id: guild.id }) ?? Guilds.create({ guild_id: guild.id, moderation: { isModerating: false, mutes: true, mute_role: null }, privates: { isEnabled: false, category: null, channelVoice: null, channelText: null }, tickets: { isEnabled: false, number: 0, categoryOpen: null, categoryHold: null, categoryClosed: null, channelLog: null, channelNew: null }, hello_msg: { isEnabled: false, text: null } })
 
     const banner_url = await guild.bannerURL({dynamic: true, size: 2048});
     const avatar_url = await guild.iconURL({dynamic: true, size: 1024});

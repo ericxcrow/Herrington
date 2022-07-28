@@ -25,4 +25,17 @@ module.exports = async (bot, member) => {
   } else {
     await member.edit({ nick: users?.nick_name }, `Перезаход на сервер.`);
   }
+
+  const embed = new MessageEmbed()
+    .setColor(guilds.color)
+
+  if(guilds.hello_msg.get('isEnabled') & guilds.hello_msg.get('text') != null) {
+    embed.setDescription(guilds.hello_msg.get('text'))
+    embed.setTitle(`Добро пожаловать на сервер ${member.guild.name}`)
+    let user = await bot.users.fetch(member.id).catch(() => null)
+    await user.send({ embeds: [embed] }).catch(() => null)
+  } else {
+    return
+  }
+
 }

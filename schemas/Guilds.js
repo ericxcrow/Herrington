@@ -7,5 +7,6 @@ const schema = mongoose.Schema({
  mod_roles: Array,
  privates: Map,
  tickets: Map,
+ hello_msg: Map,
 });
 module.exports = mongoose.model(`Guilds`, schema)

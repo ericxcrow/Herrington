@@ -34,6 +34,11 @@ module.exports = {
               description: 'Настройки системы приватов на сервере',
               value: 'privates',
             },
+            {
+              label: 'Приветственное сообщение',
+              description: 'Настройки приветствия при входе на сервер',
+              value: 'hello_msg',
+            },
           ])
 
       const row = new MessageActionRow()

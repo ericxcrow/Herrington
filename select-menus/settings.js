@@ -81,6 +81,22 @@ module.exports = async (bot, interaction) => {
               },
             ])
 
+        const hello_msg = new MessageSelectMenu()
+            .setCustomId('hello_msg')
+            .setPlaceholder('Настройки приветствия')
+            .addOptions([
+              {
+                label: 'Включить',
+                description: 'Включить приветствие при входе на сервер',
+                value: 'hello_msg_enable',
+              },
+              {
+                label: 'Выключить',
+                description: 'Выключить приветствие при входе на сервер',
+                value: 'hello_msg_disable',
+              },
+            ])
+
     const row = new MessageActionRow()
       .addComponents(moderation)
     const row2 = new MessageActionRow()
@@ -89,6 +105,16 @@ module.exports = async (bot, interaction) => {
       .addComponents(privates)
     const row4 = new MessageActionRow()
       .addComponents(tickets)
+    const row5 = new MessageActionRow()
+      .addComponents(hello_msg)
+
+    const row6 = new MessageActionRow()
+    .addComponents(
+        new MessageButton()
+        .setCustomId('hello_msg_text')
+        .setLabel(`Изменить приветственное сообщение`)
+        .setStyle('SECONDARY'),
+    )
 
     if(interaction.values == `moderation`){
       let roles = guilds.mod_roles.map((x) => `<@&${x}>`).join(`, `);
@@ -114,6 +140,19 @@ module.exports = async (bot, interaction) => {
       embed.setDescription(`Для настройки системы кастомных приватов - выберете подходящий пункт в меню.\n\n**Нынешние настройки:**\nПриваты: ${guilds.privates.get('isEnabled') == false ?'\`Выключены\`':`\`Включены\``}\nКатегория приватов: ${guilds.privates.get('category') == null ?'\`Отсутствует\`':`<#${guilds.privates.get('category')}>`}\nКанал создания приватов: ${guilds.privates.get('channelVoice') == null ?'\`Отсутствует\`':`<#${guilds.privates.get('channelVoice')}>`}\nКанал настройки приватов: ${guilds.privates.get('channelText') == null ?'\`Отсутствует\`':`<#${guilds.privates.get('channelText')}>`}`)
       embed.setFooter({text: `Для выбора другого пункта настройки - используйте команду "!settings"`})
       return interaction.update({ embeds: [embed], components: [row3] })
+    }
+
+    if(interaction.values == `hello_msg`){
+      if (guilds.hello_msg.get('isEnabled')){
+        embed.setDescription(`Для настройки привественного сообщения - выберете подходящий пункт в меню.\n\n**Нынешние настройки:**\nПриветствие при входе: ${guilds.hello_msg.get('isEnabled') == false ?'\`Выключено\`':`\`Включено\``}\nТекст приветствия: ${guilds.hello_msg.get('text') == null ?'\`Отсутствует\`':`\n\`\`\`\n${guilds.hello_msg.get('text')}\`\`\``}`)
+        embed.setFooter({text: `Для выбора другого пункта настройки - используйте команду "!settings"`})
+        return interaction.update({ embeds: [embed], components: [row5, row6] })
+      } else {
+        embed.setDescription(`Для настройки привественного сообщения - выберете подходящий пункт в меню.\n\n**Нынешние настройки:**\nПриветствие при входе: ${guilds.hello_msg.get('isEnabled') == false ?'\`Выключено\`':`\`Включено\``}\nТекст приветствия: ${guilds.hello_msg.get('text') == null ?'\`Отсутствует\`':`\n\`\`\`\n${guilds.hello_msg.get('text')}\`\`\``}`)
+        embed.setFooter({text: `Для выбора другого пункта настройки - используйте команду "!settings"`})
+        return interaction.update({ embeds: [embed], components: [row5] })
+      }
+
     }
 
 }
