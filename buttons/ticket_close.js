@@ -19,7 +19,7 @@ module.exports = async (bot, interaction) => {
         return interaction.reply({ embeds: [err], ephemeral: true });
     }
 
-    if(!interaction.member.permissions.has('ADMINISTRATOR') & interaction.member.id != botconfig.owner & !interaction.member.roles.cache.some(r => guilds.master_roles.some(role => r.id == role))){
+    if(!interaction.member.permissions.has('ADMINISTRATOR') & interaction.member.id != botconfig.owner & !interaction.member.roles.cache.some(r => guilds.master_roles.some(role => r.id == role)) & !interaction.member.roles.cache.some(r => guilds.mod_roles.some(role => r.id == role))){
         const err = new MessageEmbed()
         .setTitle("Ошибка")
         .setColor(guilds.color)
